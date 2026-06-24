@@ -16,6 +16,9 @@ namespace DTOs
         [Range(1, int.MaxValue, ErrorMessage = "AreaId debe ser mayor que 0.")]
         public int AreaId { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "TipoTicketId debe ser mayor que 0.")]
+        public int TipoTicketId { get; set; }
+
         public required Boolean Estado { get; set; } = true;
     }
 
@@ -27,6 +30,7 @@ namespace DTOs
         public string NombreCategoria { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public int AreaId { get; set; }
+        public int TipoTicketId { get; set; }
         public Boolean Estado { get; set; } = true;
     }
 
@@ -41,6 +45,9 @@ namespace DTOs
 
         [Range(1, int.MaxValue, ErrorMessage = "AreaId debe ser mayor que 0.")]
         public int? AreaId { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "TipoTicketId debe ser mayor que 0.")]
+        public int? TipoTicketId { get; set; }
 
         public Boolean? Estado { get; set; }
     }

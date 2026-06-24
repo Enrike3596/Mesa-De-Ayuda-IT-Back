@@ -56,13 +56,13 @@ namespace Models
         public virtual Usuario? CerradoPor { get; set; }
 
         // Relación: TICKET ||--o{ TICKET_ASIGNADO
-        public virtual ICollection<TkAsignado> TkAsignados { get; set; } = new List<TkAsignado>();
+        public virtual ICollection<TicketAsignado> TicketAsignados { get; set; } = new List<TicketAsignado>();
 
         // Relación: TICKET ||--o{ TICKET_COMENTARIO
-        public virtual ICollection<TkComentario> TkComentarios { get; set; } = new List<TkComentario>();
+        public virtual ICollection<TicketComentario> TicketComentarios { get; set; } = new List<TicketComentario>();
 
         // Relación: TICKET ||--o{ TK_ANEXO
-        public virtual ICollection<TkAnexo> TkAnexos { get; set; } = new List<TkAnexo>();
+        public virtual ICollection<TicketAnexo> TicketAnexos { get; set; } = new List<TicketAnexo>();
 
         // Relación: TICKET ||--o{ HISTORIAL_TICKET
         public virtual ICollection<HistorialTicket> HistorialTickets { get; set; } = new List<HistorialTicket>();

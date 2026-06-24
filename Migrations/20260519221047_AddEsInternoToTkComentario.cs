@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HelpDesk.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddEsInternoToTkComentario : Migration
+    public partial class AddEsInternoToTicketComentario : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -4,11 +4,13 @@ BEGIN;
 SET TIME ZONE 'UTC';
 
 TRUNCATE TABLE 
+public."Notificaciones",
 public."HistorialTickets",
-public."TkComentarios",
-public."TkAsignados",
-public."TkAnexos",
+public."TicketComentarios",
+public."TicketAsignados",
+public."TicketAnexos",
 public."Tickets",
+public."TipoTickets",
 public."Subcategorias",
 public."Categorias",
 public."Usuarios",
@@ -53,20 +55,31 @@ VALUES
 (4, 'Baja', 'Baja', 24, TRUE);
 
 -- =====================================================
+-- TIPO TICKETS
+-- =====================================================
+
+INSERT INTO public."TipoTickets"
+("Id", "Nombre")
+VALUES
+(1, 'Incidente'),
+(2, 'Requerimiento'),
+(3, 'Consulta');
+
+-- =====================================================
 -- CATEGORIAS
 -- =====================================================
 
 INSERT INTO public."Categorias"
-("Id", "AreaId", "Nombre", "Descripcion", "Estado")
+("Id", "AreaId", "TipoTicketId", "Nombre", "Descripcion", "Estado")
 VALUES
-(1, 1, 'Incidentes', 'Gestion de incidentes', TRUE),
-(2, 1, 'Requerimientos', 'Solicitudes de usuarios', TRUE),
-(3, 2, 'Servidores', 'Administracion de servidores', TRUE),
-(4, 3, 'Aplicaciones', 'Problemas de software', TRUE),
-(5, 4, 'Accesos', 'Gestion de accesos y permisos', TRUE),
-(6, 5, 'Conectividad', 'Problemas de red', TRUE),
-(7, 6, 'Hardware', 'Fallas de equipos', TRUE),
-(8, 7, 'SQL', 'Administracion de BD', TRUE);
+(1, 1, 1, 'Incidentes', 'Gestion de incidentes', TRUE),
+(2, 1, 2, 'Requerimientos', 'Solicitudes de usuarios', TRUE),
+(3, 2, 1, 'Servidores', 'Administracion de servidores', TRUE),
+(4, 3, 1, 'Aplicaciones', 'Problemas de software', TRUE),
+(5, 4, 2, 'Accesos', 'Gestion de accesos y permisos', TRUE),
+(6, 5, 1, 'Conectividad', 'Problemas de red', TRUE),
+(7, 6, 1, 'Hardware', 'Fallas de equipos', TRUE),
+(8, 7, 3, 'SQL', 'Administracion de BD', TRUE);
 
 -- =====================================================
 -- SUBCATEGORIAS
@@ -176,15 +189,15 @@ VALUES
 WITH ticket_seed AS (
     SELECT * FROM (VALUES
         -- 1) Ticket en proceso (en tiempo)
-        (1, 5, 1, 1, 2, 1, 'Error correo corporativo', 'No permite enviar correos', 'En Proceso', (NOW() - INTERVAL '30 minutes'), NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
+        (1, 5, 1, 1, 2, 1, 1, 'Error correo corporativo', 'No permite enviar correos', 'En Proceso', (NOW() - INTERVAL '30 minutes'), NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
         -- 2) Ticket en espera (SLA pausado)
-        (2, 5, 3, 5, 1, 2, 'Servidor principal caido', 'El servidor no responde', 'En Espera', (NOW() - INTERVAL '90 minutes'), NULL::timestamptz, (NOW() - INTERVAL '10 minutes'), NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
+        (2, 5, 3, 5, 1, 2, 1, 'Servidor principal caido', 'El servidor no responde', 'En Espera', (NOW() - INTERVAL '90 minutes'), NULL::timestamptz, (NOW() - INTERVAL '10 minutes'), NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
         -- 3) Ticket vencido (SLA ya pasó)
-        (3, 5, 4, 8, 3, 3, 'Error aplicacion web', 'La aplicacion genera error 500', 'En Proceso', (NOW() - INTERVAL '10 hours'), NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
+        (3, 5, 4, 8, 3, 3, 1, 'Error aplicacion web', 'La aplicacion genera error 500', 'En Proceso', (NOW() - INTERVAL '10 hours'), NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::timestamptz, NULL::text, NULL::int),
         -- 4) Pendiente Confirmacion: agente solicito cierre, esperando usuario
-        (4, 5, 2, 3, 2, 1, 'Solicitud creacion usuario', 'Se requiere crear cuenta para nuevo empleado', 'Pendiente Confirmacion', (NOW() - INTERVAL '2 hours'), NULL::timestamptz, NULL::timestamptz, (NOW() - INTERVAL '15 minutes'), NULL::timestamptz, NULL::text, 2),
+        (4, 5, 2, 3, 2, 1, 2, 'Solicitud creacion usuario', 'Se requiere crear cuenta para nuevo empleado', 'Pendiente Confirmacion', (NOW() - INTERVAL '2 hours'), NULL::timestamptz, NULL::timestamptz, (NOW() - INTERVAL '15 minutes'), NULL::timestamptz, NULL::text, 2),
         -- 5) Reabierto: usuario rechazo el cierre
-        (5, 4, 4, 8, 3, 3, 'Error modulo facturacion', 'El modulo de facturacion no carga correctamente', 'Reabierto', (NOW() - INTERVAL '5 hours'), NULL::timestamptz, NULL::timestamptz, (NOW() - INTERVAL '2 hours'), (NOW() - INTERVAL '1 hour'), 'El problema persiste, la facturacion sigue sin cargar', 3)
+        (5, 4, 4, 8, 3, 3, 1, 'Error modulo facturacion', 'El modulo de facturacion no carga correctamente', 'Reabierto', (NOW() - INTERVAL '5 hours'), NULL::timestamptz, NULL::timestamptz, (NOW() - INTERVAL '2 hours'), (NOW() - INTERVAL '1 hour'), 'El problema persiste, la facturacion sigue sin cargar', 3)
     ) AS v(
         "Id",
         "UsuarioCreadorId",
@@ -192,6 +205,7 @@ WITH ticket_seed AS (
         "SubcategoriaId",
         "PrioridadId",
         "AreaId",
+        "TipoTicketId",
         "Titulo",
         "Descripcion",
         "Estado",
@@ -211,6 +225,7 @@ WITH ticket_seed AS (
         s."SubcategoriaId",
         s."PrioridadId",
         s."AreaId",
+        s."TipoTicketId",
         s."Titulo",
         s."Descripcion",
         s."Estado",
@@ -237,6 +252,7 @@ INSERT INTO public."Tickets"
     "SubcategoriaId",
     "PrioridadId",
     "AreaId",
+    "TipoTicketId",
     "Titulo",
     "Descripcion",
     "Estado",
@@ -259,6 +275,7 @@ SELECT
     t."SubcategoriaId",
     t."PrioridadId",
     t."AreaId",
+    t."TipoTicketId",
     t."Titulo",
     t."Descripcion",
     t."Estado",
@@ -285,7 +302,7 @@ FROM ticket_calc t;
 -- TICKETS ASIGNADOS
 -- =====================================================
 
-INSERT INTO public."TkAsignados"
+INSERT INTO public."TicketAsignados"
 (
     "Id",
     "TicketId",
@@ -303,7 +320,7 @@ VALUES
 -- COMENTARIOS TICKETS
 -- =====================================================
 
-INSERT INTO public."TkComentarios"
+INSERT INTO public."TicketComentarios"
 (
     "Id",
     "TicketId",
@@ -366,7 +383,7 @@ VALUES
 -- ANEXOS TICKETS
 -- =====================================================
 
-INSERT INTO public."TkAnexos"
+INSERT INTO public."TicketAnexos"
 (
     "Id",
     "TicketId",
@@ -388,7 +405,7 @@ VALUES
     2048,
     '/uploads/error_correo.png',
     NOW(),
-    TRUE
+    'Activo'
 ),
 (
     2,
@@ -399,7 +416,7 @@ VALUES
     4096,
     '/uploads/servidor_logs.txt',
     NOW(),
-    TRUE
+    'Activo'
 ),
 (
     3,
@@ -410,7 +427,7 @@ VALUES
     5096,
     '/uploads/error_backend.pdf',
     NOW(),
-    TRUE
+    'Activo'
 );
 
 -- =====================================================
@@ -432,6 +449,27 @@ VALUES
 (2, 5, 3, 'Cierre solicitado. Solución: Se reinicio el servicio de facturacion.', (NOW() - INTERVAL '2 hours')),
 -- Ticket 5: Usuario rechaza cierre
 (3, 5, 4, 'Usuario rechazó el cierre. Motivo: El problema persiste, la facturacion sigue sin cargar.', (NOW() - INTERVAL '1 hour'));
+
+-- =====================================================
+-- NOTIFICACIONES
+-- =====================================================
+
+INSERT INTO public."Notificaciones"
+(
+    "Id",
+    "UsuarioId",
+    "TicketId",
+    "Tipo",
+    "Mensaje",
+    "Leida",
+    "FechaCreacion"
+)
+VALUES
+(1, 2, 1, 'TICKET_CREADO', 'Nuevo ticket creado: Error correo corporativo', FALSE, NOW()),
+(2, 3, 1, 'TICKET_CREADO', 'Nuevo ticket creado: Error correo corporativo', FALSE, NOW()),
+(3, 2, 4, 'TICKET_ASIGNADO', 'Se te ha asignado el ticket: Solicitud creacion usuario', FALSE, NOW()),
+(4, 5, 4, 'TICKET_ACTUALIZADO', 'El ticket ha sido actualizado: Solicitud creacion usuario', TRUE, NOW()),
+(5, 5, 1, 'COMENTARIO_NUEVO', 'Carlos Ramirez comentó en: Error correo corporativo', FALSE, NOW());
 
 -- =====================================================
 -- SINCRONIZAR SECUENCIAS (POST-SEED)

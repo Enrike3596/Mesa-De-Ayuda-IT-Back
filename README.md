@@ -251,9 +251,9 @@ http://localhost:5214/swagger
 │   ├── SubcategoriaController.cs
 │   ├── PrioridadController.cs
 │   ├── RolController.cs
-│   ├── TkAsignadoController.cs # Asignación agente-ticket
-│   ├── TkComentarioController.cs
-│   └── TkAnexoController.cs    # Archivos adjuntos
+│   ├── TicketAsignadoController.cs # Asignación agente-ticket
+│   ├── TicketComentarioController.cs
+│   └── TicketAnexoController.cs    # Archivos adjuntos
 ├── Services/             # Lógica de negocio (11)
 ├── Repositories/         # Acceso a datos (10)
 ├── Models/               # Entidades del dominio (12)
@@ -307,9 +307,9 @@ http://localhost:5214/swagger
 
 | Método | Ruta | Descripción |
 |---|---|---|
-| `GET/POST/PUT/DELETE` | `/api/tkasignado` | Asignar/desasignar agentes a tickets |
-| `GET/POST/PUT/DELETE` | `/api/tkcomentario` | Comentarios (públicos e internos) |
-| `GET/POST/PUT/DELETE` | `/api/tkanexo` | Archivos adjuntos |
+| `GET/POST/PUT/DELETE` | `/api/TicketAsignado` | Asignar/desasignar agentes a tickets |
+| `GET/POST/PUT/DELETE` | `/api/TicketComentario` | Comentarios (públicos e internos) |
+| `GET/POST/PUT/DELETE` | `/api/TicketAnexo` | Archivos adjuntos |
 
 Toda la documentación detallada con esquemas de solicitud/respuesta está disponible en `/swagger` al ejecutar la API.
 

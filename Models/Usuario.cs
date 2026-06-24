@@ -29,13 +29,13 @@ namespace Models
         public virtual ICollection<Ticket> TicketsCreados { get; set; } = new List<Ticket>();
 
         // Relación: USUARIO ||--o{ TICKET_ASIGNADO (resuelve)
-        public virtual ICollection<TkAsignado> TkAsignados { get; set; } = new List<TkAsignado>();
+        public virtual ICollection<TicketAsignado> TicketAsignados { get; set; } = new List<TicketAsignado>();
 
         // Relación: USUARIO ||--o{ TICKET_COMENTARIO (escribe)
-        public virtual ICollection<TkComentario> TkComentarios { get; set; } = new List<TkComentario>();
+        public virtual ICollection<TicketComentario> TicketComentarios { get; set; } = new List<TicketComentario>();
 
         // Relación: USUARIO ||--o{ TK_ANEXO (carga)
-        public virtual ICollection<TkAnexo> TkAnexos { get; set; } = new List<TkAnexo>();
+        public virtual ICollection<TicketAnexo> TicketAnexos { get; set; } = new List<TicketAnexo>();
 
         // Relación: USUARIO ||--o{ TICKET (cierra)
         public virtual ICollection<Ticket> TicketsCerrados { get; set; } = new List<Ticket>();

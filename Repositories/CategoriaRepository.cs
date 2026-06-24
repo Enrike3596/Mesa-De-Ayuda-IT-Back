@@ -53,6 +53,9 @@ namespace Repositories
             if (categoria.AreaId <= 0)
                 throw new ArgumentException("AreaId debe ser mayor que 0.", nameof(categoria));
 
+            if (categoria.TipoTicketId <= 0)
+                throw new ArgumentException("TipoTicketId debe ser mayor que 0.", nameof(categoria));
+
             categoria.Estado = categoria.Estado; // El modelo Categoria usa bool, no requiere normalización de string
 
             _context.Categorias.Add(categoria);
@@ -86,6 +89,13 @@ namespace Repositories
                 if (dto.AreaId.Value <= 0)
                     throw new ArgumentException("AreaId debe ser mayor que 0.", nameof(dto.AreaId));
                 categoria.AreaId = dto.AreaId.Value;
+            }
+
+            if (dto.TipoTicketId.HasValue)
+            {
+                if (dto.TipoTicketId.Value <= 0)
+                    throw new ArgumentException("TipoTicketId debe ser mayor que 0.", nameof(dto.TipoTicketId));
+                categoria.TipoTicketId = dto.TipoTicketId.Value;
             }
 
             if (dto.Estado != null) categoria.Estado = dto.Estado.Value;

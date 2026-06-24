@@ -27,12 +27,14 @@ namespace Services
         private readonly ITicketRepository _repo;
         private readonly DbContextcs _context;
         private readonly IHubContext<TicketHub> _hubContext;
+        private readonly INotificacionService _notificacionService;
 
-        public TicketService(ITicketRepository repo, DbContextcs context, IHubContext<TicketHub> hubContext)
+        public TicketService(ITicketRepository repo, DbContextcs context, IHubContext<TicketHub> hubContext, INotificacionService notificacionService)
         {
             _repo = repo;
             _context = context;
             _hubContext = hubContext;
+            _notificacionService = notificacionService;
         }
 
         public async Task<List<TicketResponseDTO>> ObtenerTodosAsync()
@@ -67,6 +69,7 @@ namespace Services
             var response = MapearRespuesta(creado);
 
             await _hubContext.Clients.All.SendAsync("TicketCreado", response);
+            await _notificacionService.CrearNotificacionTicketCreadoAsync(creado);
 
             return response;
         }
@@ -79,6 +82,7 @@ namespace Services
             var response = MapearRespuesta(actualizado);
 
             await _hubContext.Clients.All.SendAsync("TicketActualizado", response);
+            await _notificacionService.CrearNotificacionTicketActualizadoAsync(actualizado);
 
             return response;
         }
@@ -156,6 +160,7 @@ namespace Services
 
             var response = MapearRespuesta(ticket);
             await _hubContext.Clients.All.SendAsync("TicketActualizado", response);
+            await _notificacionService.CrearNotificacionTicketActualizadoAsync(ticket);
             return response;
         }
 
@@ -203,6 +208,7 @@ namespace Services
 
             var response = MapearRespuesta(ticket);
             await _hubContext.Clients.All.SendAsync("TicketActualizado", response);
+            await _notificacionService.CrearNotificacionTicketActualizadoAsync(ticket);
             return response;
         }
 

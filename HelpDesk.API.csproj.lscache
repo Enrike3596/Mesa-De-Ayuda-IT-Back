@@ -63,9 +63,9 @@ Controllers/
  RolController.cs
  SubcategoriaController.cs
  TicketController.cs
- TkAnexoController.cs
- TkAsignadoController.cs
- TkComentarioController.cs
+ TicketAnexoController.cs
+ TicketAsignadoController.cs
+ TicketComentarioController.cs
  UsuarioController.cs
 Data/DbContextcs.cs
 DTOs/
@@ -76,9 +76,9 @@ DTOs/
  RolDTO.cs
  SubcategoriaDTO.cs
  TicketDTO.cs
- TkAnexoDTO.cs
- TkAsignadoDTO.cs
- TkComentarioDTO.cs
+ TicketAnexoDTO.cs
+ TicketAsignadoDTO.cs
+ TicketComentarioDTO.cs
  UsuarioDTO.cs
 Helpers/
  EstadoNormalizer.cs
@@ -94,9 +94,9 @@ Models/
  Rol.cs
  Subcategoria.cs
  Ticket.cs
- TkAnexo.cs
- TkAsignado.cs
- TkComentario.cs
+ TicketAnexo.cs
+ TicketAsignado.cs
+ TicketComentario.cs
  Usuario.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
@@ -110,9 +110,9 @@ Repositories/
  RolRepository.cs
  SubcategoriaRepository.cs
  TicketRepository.cs
- TkAnexosRepository.cs
- TkAsignadoRepository.cs
- TkComentarioRepository.cs
+ TicketAnexosRepository.cs
+ TicketAsignadoRepository.cs
+ TicketComentarioRepository.cs
  UsuarioRepository.cs
 Services/
  AreaService.cs
@@ -121,9 +121,9 @@ Services/
  RolService.cs
  SubcategoriaService.cs
  TicketService.cs
- TkAnexoService.cs
- TkAsignadoService.cs
- TkComentarioService.cs
+ TicketAnexoService.cs
+ TicketAsignadoService.cs
+ TicketComentarioService.cs
  UsuarioService.cs
 
 [metadataReferences]

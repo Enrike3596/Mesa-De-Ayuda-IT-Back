@@ -40,14 +40,14 @@ builder.Services.AddScoped<IPrioridadService, PrioridadService>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 
-builder.Services.AddScoped<ITkAsignadoRepository, TkAsignadoRepository>();
-builder.Services.AddScoped<ITkAsignadoService, TkAsignadoService>();
+builder.Services.AddScoped<ITicketAsignadoRepository, TicketAsignadoRepository>();
+builder.Services.AddScoped<ITicketAsignadoService, TicketAsignadoService>();
 
-builder.Services.AddScoped<ITkComentarioRepository, TkComentarioRepository>();
-builder.Services.AddScoped<ITkComentarioService, TkComentarioService>();
+builder.Services.AddScoped<ITicketComentarioRepository, TicketComentarioRepository>();
+builder.Services.AddScoped<ITicketComentarioService, TicketComentarioService>();
 
-builder.Services.AddScoped<ITkAnexosRepository, TkAnexosRepository>();
-builder.Services.AddScoped<ITkAnexoService, TkAnexoService>();
+builder.Services.AddScoped<ITicketAnexosRepository, TicketAnexosRepository>();
+builder.Services.AddScoped<ITicketAnexoService, TicketAnexoService>();
 
 var fileStorageBasePath = builder.Configuration["FileStorage:BasePath"]!;
 var fileStorageRequestPath = builder.Configuration["FileStorage:RequestPath"]!;
@@ -57,6 +57,11 @@ builder.Services.AddSingleton<IFileStorageService>(
 
 builder.Services.AddScoped<ISubcategoriaRepository, SubcategoriaRepository>();
 builder.Services.AddScoped<ISubcategoriaService, SubcategoriaService>();
+
+builder.Services.AddScoped<ITipoTicketRepository, TipoTicketRepository>();
+builder.Services.AddScoped<ITipoTicketService, TipoTicketService>();
+
+builder.Services.AddScoped<INotificacionService, NotificacionService>();
 
 // =========================
 // 3) SignalR (Tiempo real)

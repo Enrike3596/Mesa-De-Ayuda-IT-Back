@@ -42,6 +42,7 @@ namespace Services
                 Nombre = dto.NombreCategoria,
                 Descripcion = dto.Descripcion,
                 AreaId = dto.AreaId,
+                TipoTicketId = dto.TipoTicketId,
                 Estado = dto.Estado
             };
 
@@ -63,6 +64,7 @@ namespace Services
             NombreCategoria = c.Nombre,
             Descripcion = c.Descripcion,
             AreaId = c.AreaId,
+            TipoTicketId = c.TipoTicketId,
             Estado = c.Estado
         };
     }

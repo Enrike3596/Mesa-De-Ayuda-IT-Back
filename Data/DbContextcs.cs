@@ -16,11 +16,12 @@ namespace Data
          public DbSet<Categoria> Categorias { get; set; }
          public DbSet<Subcategoria> Subcategorias { get; set; }
          public DbSet<Prioridad> Prioridades { get; set; }
-         public DbSet<TkAsignado> TkAsignados { get; set; }
-         public DbSet<TkComentario> TkComentarios { get; set; }
-         public DbSet<TkAnexo> TkAnexos { get; set; }
+         public DbSet<TicketAsignado> TicketAsignados { get; set; }
+         public DbSet<TicketComentario> TicketComentarios { get; set; }
+         public DbSet<TicketAnexo> TicketAnexos { get; set; }
          public DbSet<HistorialTicket> HistorialTickets { get; set; }
-         public DbSet<TipoTicket> TipoTickets { get; set; }
+          public DbSet<TipoTicket> TipoTickets { get; set; }
+          public DbSet<Notificacion> Notificaciones { get; set; }
         public DbContextcs(DbContextOptions<DbContextcs> options) : base(options)
         {
         }
@@ -37,6 +38,14 @@ namespace Data
                 entity.HasOne(t => t.TicketTipo)
                     .WithMany(tt => tt.Tickets)
                     .HasForeignKey(t => t.TipoTicketId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+                entity.HasOne(c => c.TicketTipo)
+                    .WithMany(tt => tt.Categorias)
+                    .HasForeignKey(c => c.TipoTicketId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
         }
