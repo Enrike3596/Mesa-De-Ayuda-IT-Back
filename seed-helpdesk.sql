@@ -126,7 +126,7 @@ VALUES
     'Administrador Sistema',
     'admin@helpdesk.local',
     '3000000001',
-    'Admin123*',
+    '$2a$11$CVlMQVpMRzvgm3gilSz38O3s5gGOUcvqnKv30IWS4h3BuzXr6oEZe',
     TRUE,
     NOW(),
     NOW()
@@ -138,7 +138,7 @@ VALUES
     'Carlos Ramirez',
     'carlos.ramirez@helpdesk.local',
     '3000000002',
-    'Carlos123*',
+    '$2a$11$FlqWMKHCnMtCnl3HtdOaZ.K0u7lPuk.sh5qScvtftbBh46L6OvuLi',
     TRUE,
     NOW(),
     NOW()
@@ -150,7 +150,7 @@ VALUES
     'Laura Gomez',
     'laura.gomez@helpdesk.local',
     '3000000003',
-    'Laura123*',
+    '$2a$11$WfsJVeJTA/S.WMltdYU1W.WRKUF9jPk1kGg0Tvc4cVsFIwIr9oRpC',
     TRUE,
     NOW(),
     NOW()
@@ -162,7 +162,7 @@ VALUES
     'Andres Torres',
     'andres.torres@helpdesk.local',
     '3000000004',
-    'Andres123*',
+    '$2a$11$u2VADXL6VHJj6VkFT2.PEO4zdh5DvT0RnBsddDeWORJrgjMatF.z.',
     TRUE,
     NOW(),
     NOW()
@@ -174,7 +174,7 @@ VALUES
     'Sofia Martinez',
     'sofia.martinez@helpdesk.local',
     '3000000005',
-    'Sofia123*',
+    '$2a$11$SoZRglzfVDxCBpz7/X32fuQ6C8.sf2iCo6h4zuRYhThJ2PmO737Tm',
     TRUE,
     NOW(),
     NOW()
