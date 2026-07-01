@@ -156,7 +156,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ReactApp", policy =>
         policy.WithOrigins(
                   "http://localhost:5173", // Vite
-                  "http://localhost:3000") // Next.js
+                  "http://localhost:3000", // Next.js
+                  "https://victorious-field-01396c30f.7.azurestaticapps.net") // Azure SWA
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()); // Requerido por SignalR (WebSockets / LongPolling)
