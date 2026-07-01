@@ -169,7 +169,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<Data.DbContextcs>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 }
 
 if (app.Environment.IsDevelopment())
