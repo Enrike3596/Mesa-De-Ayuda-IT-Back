@@ -49,11 +49,7 @@ builder.Services.AddScoped<ITicketComentarioService, TicketComentarioService>();
 builder.Services.AddScoped<ITicketAnexosRepository, TicketAnexosRepository>();
 builder.Services.AddScoped<ITicketAnexoService, TicketAnexoService>();
 
-var fileStorageBasePath = builder.Configuration["FileStorage:BasePath"]!;
-var fileStorageRequestPath = builder.Configuration["FileStorage:RequestPath"]!;
-Directory.CreateDirectory(fileStorageBasePath);
-builder.Services.AddSingleton<IFileStorageService>(
-    _ => new FileStorageService(fileStorageBasePath, fileStorageRequestPath));
+builder.Services.AddSingleton<IFileStorageService, AzureBlobStorageService>();
 
 builder.Services.AddScoped<ISubcategoriaRepository, SubcategoriaRepository>();
 builder.Services.AddScoped<ISubcategoriaService, SubcategoriaService>();
@@ -189,12 +185,6 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("ReactApp");
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(fileStorageBasePath),
-    RequestPath = fileStorageRequestPath
-});
 
 app.UseAuthentication();
 app.UseAuthorization();
